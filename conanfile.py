@@ -23,22 +23,10 @@ class LibunwindConan(ConanFile):
         os.rename(extracted_dir, self.source_subfolder)
 
     def build(self):
-        #copyfile("%s/data/autotools/config.guess"%(self.cerbero_root), "%s/aux/config.guess"%(os.getcwd()))
-        #copyfile("%s/data/autotools/config.sub"%(self.cerbero_root), "%s/aux/config.sub"%(os.getcwd()))
-        #copyfile("%s/data/autotools/config.guess"%(self.cerbero_root), "%s/config/config.guess"%(os.getcwd()))
-        #copyfile("%s/data/autotools/config.sub"%(self.cerbero_root), "%s/config/config.sub"%(os.getcwd()))
-        #self.run('./configure --prefix %s/build --libdir %s/build/lib --disable-maintainer-mode'
-        #' --disable-silent-rules --enable-introspection'%(os.getcwd(),os.getcwd()))
-        #self.run("make -j4")
-        #self.run("make install")
 
         with tools.chdir(self.source_subfolder):
             self.run('./autogen.sh')
             _args = ["--prefix=%s/builddir"%(os.getcwd()), "--disable-silent-rules", "--enable-introspection"]
-            #if self.options.shared:
-            #    _args.extend(['--enable-shared=yes','--enable-static=no'])
-            #else:
-            #    _args.extend(['--enable-shared=no','--enable-static=yes'])
             autotools = AutoToolsBuildEnvironment(self)
             autotools.configure(args=_args)
             autotools.make(args=["-j4"])
